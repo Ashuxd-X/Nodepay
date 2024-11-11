@@ -17,7 +17,7 @@ def show_warning():
   |  .-.  |.-._)   \|  .-.  | |  | | `-' /
   |  | |  |\       /|  | |  |('  '-'(_.-' 
   `--' `--' `-----' `--' `--'  `-----'     
-
+Tool For Automate NodePay
 ByPasseD Version! do it at your own risk! 
 Press Enter to continue or Ctrl+C to cancel... ''')
 
