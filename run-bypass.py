@@ -1,4 +1,3 @@
-# Test script for bypass nodepay API's | Bypassed by IM-Hanzou 
 import asyncio
 import aiohttp
 import time
