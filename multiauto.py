@@ -204,7 +204,7 @@ async def main():
            for chunk in r:
                f.write(chunk)
     all_proxies = load_proxies('proxies.txt') 
-    all_tokens = load_tokens('token_list.txt')  # Load tokens from token list 
+    all_tokens = load_tokens('tokenlist.txt')  # Load tokens from token list 
     # Take token input directly from the user
 
     if not all_tokens:
