@@ -31,7 +31,7 @@ python run.py
 - Run for bypass server:
 >Use this script if you getting errors like ```Error during API call: 403 Client Error: Forbidden for url``` 
 ```bash
-python run-bypass.py
+python runbypass.py
 ```
 - Press Enter then insert your nodepay token
 # Operating status
