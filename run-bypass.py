@@ -2,24 +2,12 @@ import asyncio
 import aiohttp
 import time
 import uuid
+import random
 import cloudscraper
 from loguru import logger
 
 def show_warning():
-    confirm = input(''' 
-  ('-.      .-')    ('-. .-.             
-  ( OO ).-. ( OO ). ( OO )  /              
-  / . --. /(_)---\_),--. ,--. ,--. ,--.   
-  | \-.  \ /    _ | |  | |  | |  | |  |   
-.-'-'  |  |\  :` `. |   .|  | |  | | .-') 
- \| |_.'  | '..`''.)|       | |  |_|( OO )
-  |  .-.  |.-._)   \|  .-.  | |  | | `-' /
-  |  | |  |\       /|  | |  |('  '-'(_.-' 
-  `--' `--' `-----' `--' `--'  `-----'     
-Tool For Automate NodePay
-ByPasseD Version! do it at your own risk! 
-Press Enter to continue or Ctrl+C to cancel... ''')
-
+    confirm = input("Do it at your own risk! \nPress Enter to continue or Ctrl+C to cancel... ")
 
     if confirm.strip() == "":
         print("Continuing...")
@@ -39,12 +27,26 @@ RETRIES = 60
 #    "PING": "https://nw.nodepay.org/api/network/ping"
 
 # Testing | Found nodepay real ip address :P | Cloudflare host bypassed!
-DOMAIN_API = {
-    # http://18.136.143.169/api/auth/session / rolling back just for auth
-    "SESSION": "https://api.nodepay.ai/api/auth/session",
-    #"PING": "http://54.255.192.166/api/network/ping"
-    "PING": "http://13.215.134.222/api/network/ping"
+DOMAIN_API_ENDPOINTS = {
+    "SESSION": [
+        "http://api.nodepay.ai/api/auth/session"
+    ],
+    "PING": [
+        "http://13.215.134.222/api/network/ping",
+        "http://18.139.20.49/api/network/ping",
+        "http://52.74.35.173/api/network/ping",
+        "http://52.77.10.116/api/network/ping",
+        "http://3.1.154.253/api/network/ping"
+    ]
 }
+
+def get_random_endpoint(endpoint_type):
+    return random.choice(DOMAIN_API_ENDPOINTS[endpoint_type])
+
+def get_endpoint(endpoint_type):
+    if endpoint_type not in DOMAIN_API_ENDPOINTS:
+        raise ValueError(f"Unknown endpoint type: {endpoint_type}")
+    return get_random_endpoint(endpoint_type)
 
 CONNECTION_STATES = {
     "CONNECTED": 1,
@@ -74,7 +76,7 @@ async def render_profile_info(proxy, token):
         if not np_session_info:
             # Generate new browser_id
             browser_id = uuidv4()
-            response = await call_api(DOMAIN_API["SESSION"], {}, proxy, token)
+            response = await call_api(get_endpoint("SESSION"), {}, proxy, token)
             valid_resp(response)
             account_info = response["data"]
             if account_info.get("uid"):
@@ -103,10 +105,10 @@ async def call_api(url, data, proxy, token):
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0",
         "Accept": "application/json",
         "Accept-Language": "en-US,en;q=0.5",
-        "Referer": "https://app.nodepay.ai",
+        "Origin": "chrome-extension://lgmpfmgeabnnlemejacfljbmonaomfmm",
     }
 
     try:
@@ -146,10 +148,11 @@ async def ping(proxy, token):
         data = {
             "id": account_info.get("uid"),
             "browser_id": browser_id,  
-            "timestamp": int(time.time())
+            "timestamp": int(time.time()),
+            "version":"2.2.7"
         }
 
-        response = await call_api(DOMAIN_API["PING"], data, proxy, token)
+        response = await call_api(get_endpoint("PING"), data, proxy, token)
         if response["code"] == 0:
             logger.info(f"Ping successful via proxy {proxy}: {response}")
             RETRIES = 0
@@ -245,7 +248,7 @@ async def main():
 
 if __name__ == '__main__':
     show_warning()
-    print("\nAlright! Insert your nodepay token")
+    print("\nAlright, we here! Insert your nodepay token that you got from the tutorial.")
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
