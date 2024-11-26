@@ -29,14 +29,25 @@ RETRIES = 60
 # Testing | Found nodepay real ip address :P | Cloudflare host bypassed!
 DOMAIN_API_ENDPOINTS = {
     "SESSION": [
-        "http://api.nodepay.ai/api/auth/session"
+        #"http://18.136.143.169/api/auth/session",
+        "https://api.nodepay.ai/api/auth/session"
+        #"https://nodepay.org/api/auth/session"
     ],
     "PING": [
+       # "https://nw.nodepay.org/api/network/ping",
+       # "http://52.77.10.116/api/network/ping",
+       # "http://54.255.192.166/api/network/ping",
+       # "http://18.136.143.169/api/network/ping",
+        "http://nodepaypantek.dayon.me/api/network/ping",
         "http://13.215.134.222/api/network/ping",
         "http://18.139.20.49/api/network/ping",
         "http://52.74.35.173/api/network/ping",
         "http://52.77.10.116/api/network/ping",
         "http://3.1.154.253/api/network/ping"
+       # "http://52.74.35.173/api/network/ping",
+       # "http://18.142.214.13/api/network/ping",
+       # "http://18.142.29.174/api/network/ping",
+       # "http://52.74.31.107/api/network/ping"
     ]
 }
 
