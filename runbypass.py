@@ -242,16 +242,16 @@ async def main():
     loading_thread = threading.Thread(target=loading_animation)
     loading_thread.start()
 
-    all_proxies = load_proxies('local_proxies.txt')
+    all_proxies = load_proxies('proxies.txt')
     try:
         with open('tokens.txt', 'r') as token_file:
             tokens = token_file.read().splitlines()
     except FileNotFoundError:
-        print(f"{get_internet_time()} - {Fore.RED}File tokens.txt tidak ditemukan. Pastikan file tersebut ada di direktori yang benar.")
+        print(f"{get_internet_time()} - {Fore.RED}tokens.txt file was not found. Make sure it is in the correct directory")
         exit()
 
     if not tokens:
-        print(f"{get_internet_time()} - {Fore.RED}Token tidak boleh kosong. Keluar dari program.")
+        print(f"{get_internet_time()} - {Fore.RED}Token cannot be empty. Exit the program")
         exit()
 
     token_proxy_pairs = [(tokens[i % len(tokens)], proxy) for i, proxy in enumerate(all_proxies)]
