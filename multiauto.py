@@ -204,11 +204,11 @@ async def main():
            for chunk in r:
                f.write(chunk)
     all_proxies = load_proxies('proxies.txt') 
-    all_tokens = load_tokens('tokenlist.txt')  # Load tokens from token list 
+    all_tokens = load_tokens('tokens.txt')  # Load tokens from token list 
     # Take token input directly from the user
 
     if not all_tokens:
-        print("No tokens found in token_list.txt. Exiting the program.")
+        print("No tokens found in tokens.txt. Exiting the program.")
         exit()
 
     while True:
